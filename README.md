@@ -37,7 +37,7 @@ And add a new interface function:
 ```c
 
 T Bst_new (tyCompares compares);
-ccc
+```
 
 Explain how this strategy works. And then implement it.
 
