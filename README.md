@@ -41,3 +41,13 @@ ccc
 
 Explain how this strategy works. And then implement it.
 
+## Result
+
+Result can be found at res directory.
+
+![Binary Search Tree Diagram](https://github.com/AAbiAbi/BinarySearchTree_clang/blob/main/res/bst1res.png "Binary Search Tree")
+
+![Binary Search Tree Diagram](https://github.com/AAbiAbi/BinarySearchTree_clang/blob/main/res/bst2res.png "Binary Search Tree")
+
+![Binary Search Tree Diagram](https://github.com/AAbiAbi/BinarySearchTree_clang/blob/main/res/bst2res2.png "Binary Search Tree")
+
