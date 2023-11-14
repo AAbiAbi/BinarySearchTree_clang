@@ -48,7 +48,7 @@ T Bst_new(tyCompares compares) {
     }
     bst->root = NULL;
     bst->compares = compares;
-    printf("success build tree %s\n",bst->root);
+    printf("success build tree\n");
     return bst;
 }
 
@@ -81,25 +81,29 @@ static node Bst_insertRecursive(node current, node ele, tyCompares compares) {
 T Bst_insert2 (T t, node ele)
 {
     if (t == NULL || t->root == NULL) {
-        printf("before insert null");
-        printf("%s\n",ele->left);
+        // printf("before insert null");
+        //printf("%s\n",ele->left);
 
         t->root = ele; 
-        printf("%s\n",t->root->key);
-        // If the tree is empty, insert the node at the root
-        printf("after insert null");
+        // printf("%s\n",t->root->key);
+        // // If the tree is empty, insert the node at the root
+        // printf("after insert null");
         return t;
     }
-    printf("before insert");
+    // printf("before insert");
     t->root = Bst_insertRecursive(t->root, ele, t->compares);
-    printf("\n%s\n",t->root->key);
-    printf("success insert");
+    // printf("\n%s\n",t->root->key);
+    
     return t;
 }
 
 
 
 #define INDENT 4
+
+// Forward declaration for the recursive in-order function
+static void Bst_inOrder_recursive(node current);
+
 
 static void printSpace (int n)
 {
@@ -108,67 +112,100 @@ static void printSpace (int n)
     printf (" ");
 }
 
-static int Bst_inOrder_traced (T t, tyVisit visitKey, tyVisit visitValue, int i)
-{
-  if (0==t)
-    return 0;
-  Bst_inOrder_traced(t->root->left, visitKey, visitValue, i + INDENT);
-  printSpace (i);
-  printf ("(");
-  visitKey (t->root->key);
-  printf (", ");
-  visitValue (t->root->value);
-  printf (")\n");
+// static int Bst_inOrder_traced (T t, tyVisit visitKey, tyVisit visitValue, int i)
+// {
+//   if (0==t)
+//     return 0;
+//   Bst_inOrder_traced(t->root->left, visitKey, visitValue, i + INDENT);
+//   printSpace (i);
+//   printf ("(");
+//   visitKey (t->root->key);
+//   printf (", ");
+//   visitValue (t->root->value);
+//   printf (")\n");
 
 
-  Bst_inOrder_traced(t->root->right, visitKey, visitValue, i + INDENT);
+//   Bst_inOrder_traced(t->root->right, visitKey, visitValue, i + INDENT);
+// }
+
+// static char *junk1 (T t, ...)
+// {
+//   return "";
+// }
+
+// static char *junk2(int i)
+// {
+//   return "";
+// }
+
+
+// static void Bst_inOrder2 (T t, tyVisit visitKey, tyVisit visitValue, int i)
+// {
+//   int r;
+//   Trace_TRACE("Bst_inOrder", Bst_inOrder_traced, 
+//               (t, visitKey, visitValue, i), junk1, r, junk2);
+//   return;
+// }
+
+
+void Bst_inOrder (T t){
+
+    if (t == NULL || t->root == NULL) {
+        // Tree is empty or uninitialized
+        return;
+    }
+
+   // printf("before traverse");
+    // Start the recursive in-order traversal from the root
+    Bst_inOrder_recursive(t->root);
+    // printf("before traverse");
+    // visitKey(t->root->key);
+    // Bst_inOrder2 (t, visitKey, visitValue, 0);
+    // printf("after traverse");
 }
 
-static char *junk1 (T t, ...)
-{
-  return "";
-}
+// The recursive in-order traversal function
+static void Bst_inOrder_recursive(node current) {
+    if (current == NULL) {
+        // Base case: reached a leaf node's child
+        return;
+    }
+    //printf("before traverse");
+    // Traverse the left subtree
+    Bst_inOrder_recursive(current->left);
 
-static char *junk2(int i)
-{
-  return "";
-}
+    // Visit the current node
+    // visitKey(current->key);   // Process the key
+    printf("(%s,%s)\n",(char *)current->key,(char *)current->value);
+    // visitValue(current->value); // Process the value
 
+    // printf("%s\n",(char *)current->value);
 
-static void Bst_inOrder2 (T t, tyVisit visitKey, tyVisit visitValue, int i)
-{
-  int r;
-  Trace_TRACE("Bst_inOrder", Bst_inOrder_traced, 
-              (t, visitKey, visitValue, i), junk1, r, junk2);
-  return;
-}
-
-
-void Bst_inOrder (T t, tyVisit visitKey, tyVisit visitValue){
-    printf("before traverse");
-    visitKey(t->root->key);
-    Bst_inOrder2 (t, visitKey, visitValue, 0);
-     printf("after traverse");
+    // Traverse the right subtree
+    Bst_inOrder_recursive(current->right);
 }
 
 // Helper function for Bst_lookup
-static Value_t Bst_lookup_recursive(T t, Key_t key, tyCompares compares) {
-    if (t == NULL) {
+static Value_t Bst_lookup_recursive(node current, Key_t key, tyCompares compares) {
+
+    
+    if (current == NULL) {
         // The key was not found in the tree
         return NULL;
     }
 
-    int comparison = compares(key, t->root->key);
+    int comparison = compares(key, current->key);
+    // printf("%d/n",comparison);
 
     if (comparison == 0) {
         // Found the key, return the associated value
-        return t->root->value;
+        return current->value;
     } else if (comparison < 0) {
         // Key may be in the left subtree
-        return Bst_lookup_recursive(t->root->left->key, key, compares);
+        return Bst_lookup_recursive(current->left, key, compares);
     } else {
         // Key may be in the right subtree
-        return Bst_lookup_recursive(t->root->right->key, key, compares);
+        return Bst_lookup_recursive(current->right, key, compares);
     }
 }
 
@@ -179,5 +216,7 @@ Value_t Bst_lookup2(T t, Key_t key) {
         // If the tree is empty, return NULL
         return NULL;
     }
-    return Bst_lookup_recursive(t, key, t->compares);
+
+    // printf ("sss\n");
+    return Bst_lookup_recursive(t->root, key, t->compares);
 }

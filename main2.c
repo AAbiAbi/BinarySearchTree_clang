@@ -22,7 +22,7 @@ node create_node(poly key, poly value) {
     new_node->value = value; // Duplicate the value string
     new_node->left = NULL;
     new_node->right = NULL;
-    printf("Found: %s\n", (char *)new_node->key);
+    // printf("Found: %s\n", (char *)new_node->key);
     return new_node;
     // Rest of the implementation
 }
@@ -80,21 +80,24 @@ int main(int argc, char *argv[]) {
     Bst_insert2(t, b_ele);
     Bst_insert2(t, a_ele);
 //    // printf("Foundb: %s\n", pr,pr);
-//     Bst_insert2(t, c_ele);
-//     Bst_insert2(t, d_ele);
-//     Bst_insert2(t, e_ele);
+    Bst_insert2(t, c_ele);
+    Bst_insert2(t, d_ele);
+    Bst_insert2(t, e_ele);
     poly ddd1 = t->root->key;
 
     // Perform in-order traversal
     printf("InOrder visit:\n");
 
-    poly ddd = t->root->value;
-    printf ("%s\n", (char *)ddd);
+    // poly ddd = t->root->value;
+    // printf ("%s\n", (char *)ddd);
 
-    pr(ddd);//should be b
+    // pr(ddd);//should be b
 
-    printf ("sss\n");
-    Bst_inOrder(t, pr, pr);
+    
+    Bst_inOrder(t);
+
+
+   
 
     // Perform a lookup
     char *s = Bst_lookup2(t, "a");
@@ -107,7 +110,7 @@ int main(int argc, char *argv[]) {
 
     // Additional code for cleanup, if necessary
 
-    printf("Debugging message: %s\n", "ddd");
+    // printf("Debugging message: %s\n", "ddd");
 
     return 0;
 }

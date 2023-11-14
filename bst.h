@@ -31,7 +31,7 @@ T Bst_insert2 (T t, node ele);
 //As we all know, bst needs a rule of comparsion. While type poly does not have a natural compartor. That why we need to manually add a compartor to poly2
 Value_t Bst_lookup2 (T t, Key_t key);
 // Recall that "inOrder" will visit the tree nodes in increasing order
-void Bst_inOrder (T t, tyVisit visitKey, tyVisit visitValue);
+void Bst_inOrder (T t);
 // void Bst_inOrder (T t, tyVisit visitKey, tyVisit visitValue);
 
 
